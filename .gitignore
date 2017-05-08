@@ -34,3 +34,6 @@
 
 # emacs backups
 *~
+
+# nisp executable
+src/nisp
