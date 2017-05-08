@@ -1,10 +1,13 @@
 #include ../Makefile.in
 
-nisp: main.o
-	$(CC) main.o -o nisp
+SRCS := $(wildcard *.c)
+OBJS := ${SRCS:c=o}
+
+nisp: $(OBJS)
+	$(CC) $(OBJS) -o nisp
 
 %.o: %.c
-	$(CC) -c $<
+	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm *.o nisp
