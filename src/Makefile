@@ -3,6 +3,8 @@
 SRCS := $(wildcard *.c)
 OBJS := ${SRCS:c=o}
 
+CFLAGS := -W -Wall -g -std=c11
+
 nisp: $(OBJS)
 	$(CC) $(OBJS) -o nisp
 
