@@ -1,8 +1,8 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 
 #include "repl.h"
-
 #include "scanner.h"
 
 int main(int argc, char **argv) {
@@ -16,7 +16,8 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[1], "test") == 0) {
 
       char buffer[] = "(+ 1 41))";
-      exit_code = scan(buffer);
+      FILE *stream = fmemopen(buffer, strlen(buffer), "r");
+      exit_code = scan(stream);
 
     } else {
       // continue parsing input for files, options, etc

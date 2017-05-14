@@ -1,70 +1,65 @@
-#define _GNU_SOURCE
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
 #include "grammar.h"
 #include "scanner.h"
+#include "list.h"
 
-char* readWord(FILE *stream) {
+char* read_word(FILE *stream, char* lexeme, size_t count) {
 
-  int ch;
-  char lexeme[2048];
-  char* word = NULL;
-  size_t cnt = 0;
+  int ch = fgetc(stream);
+  if (ch == EOF) return NULL;
 
-  while (1) {
-
-    ch = fgetc(stream);
-
-    if ((ch == EMPTY) || (ch == RIGHT)) {
-      word = malloc(cnt);
-      strncpy(word, lexeme, cnt);
-      return word;
-    }
-
-    lexeme[cnt] = ch;
-    cnt++;
-    
+  if ((ch == EMPTY) || (ch == RIGHT)) {
+    char* word = malloc(count);
+    strncpy(word, lexeme, count);
+    return word;
   }
 
-  return NULL;
+  lexeme[count] = ch;
+  return read_word(stream, lexeme, count + 1);
 }
 
-int scan(char *source) {
 
-  int character;
-  FILE *stream;
+void scan_sexp(FILE *stream, struct cell** sexp) {
+  char lexeme[2048];
+  char* word = read_word(stream, lexeme, 0);
+  if (strlen(word) != 0) {
+    append(sexp, word);
+    scan_sexp(stream, sexp);
+  }
+  //  if (character == RIGHT)
+}
+
+
+int scan(FILE *stream) {
 
   int opened = 0;
   int closed = 0;
 
-  //  char **sexp;
-  //  char *word;
-
-  char *plus = NULL;
-  char *one = NULL;
-  char *two = NULL;
-
-  stream = fmemopen(source, strlen(source), "r");
+  struct cell* sexp = NULL;
+  int character;
   while ((character = fgetc(stream)) != EOF) {
     if (character == LEFT) {
       opened++;
-      plus = readWord(stream);
-      printf("plus: %s\n", plus);
-      one = readWord(stream);
-      printf("one: %s\n", one);
-      two = readWord(stream);
-      printf("two: %s\n", two);
+      scan_sexp(stream, &sexp);
     }
     if (character == RIGHT) closed++;
   }
   fclose(stream);
 
+  struct cell it = *sexp;
+  for (;;) {
+    printf("value: %s \n", it.value);
+    if (it.next == NULL) break;
+    it = *it.next;
+  }
+    
   if (opened - closed != 0) {
     printf("opened: %d, closed: %d\n", opened, closed);
     return 1;
   }
-  
+
   return 0;
 }

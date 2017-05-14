@@ -1,2 +1,2 @@
-int scan(char *source);
+int scan(FILE *stream);
 
