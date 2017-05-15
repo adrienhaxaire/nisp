@@ -1,2 +1,4 @@
-int scan(FILE *stream);
+#include "list.h"
+
+struct cell* scan(FILE *stream);
 

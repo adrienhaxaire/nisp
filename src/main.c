@@ -15,9 +15,18 @@ int main(int argc, char **argv) {
       exit_code = repl();
     } else if (strcmp(argv[1], "test") == 0) {
 
-      char buffer[] = "(+ 1 41))";
+      char buffer[] = "(+ 1 ( * 22 333  ))";
       FILE *stream = fmemopen(buffer, strlen(buffer), "r");
-      exit_code = scan(stream);
+      struct cell* sexp = scan(stream);
+
+      struct cell it = *sexp;
+      for (;;) {
+        printf("value: %s \n", it.value);
+        if (it.next == NULL) break;
+        it = *it.next;
+      }
+
+      // free the sexp
 
     } else {
       // continue parsing input for files, options, etc
