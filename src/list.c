@@ -1,18 +1,18 @@
 #include "list.h"
 
-void append(struct cell **list, char* word) {
-  if (*list == NULL) {
-    struct cell *cell = malloc(sizeof(struct cell));
-    cell->value = malloc(strlen(word));
-    strncpy(cell->value, word, strlen(word));
-    cell->next = NULL;
-    *list = cell;
-  } else if ((*list)->next != NULL) {
-    append(&((*list)->next), word);
+void append(struct list_t **l, void* value) {
+  if (*l == NULL) {
+    struct list_t *list = malloc(sizeof(struct list_t));
+    list->value = malloc(strlen(value));
+    strncpy(list->value, value, strlen(value));
+    list->next = NULL;
+    *l = list;
+  } else if ((*l)->next != NULL) {
+    append(&((*l)->next), value);
   } else {
-    struct cell *next = malloc(sizeof(struct cell));
-    next->value = word;
+    struct list_t *next = malloc(sizeof(struct list_t));
+    next->value = value;
     next->next = NULL;
-    (*list)->next = next;
+    (*l)->next = next;
   }
 }

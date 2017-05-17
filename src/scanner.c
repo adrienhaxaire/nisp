@@ -6,7 +6,7 @@
 #include "scanner.h"
 #include "list.h"
 
-void scan_sexp(char* input, struct cell** sexp) {
+void scan_sexp(char* input, struct list_t** sexp) {
   
   char buffer[2048];
   size_t count = 0;
@@ -45,8 +45,8 @@ void scan_sexp(char* input, struct cell** sexp) {
   }
 }
 
-struct cell* scan(char *input) {
-  struct cell* sexp = NULL;
+struct list_t* scan(char *input) {
+  struct list_t* sexp = NULL;
   scan_sexp(input, &sexp);
   return sexp;
 }

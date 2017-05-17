@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct cell {
-  char* value;
-  struct cell* next;
+struct list_t {
+  void* value;
+  struct list_t* next;
 };
 
-void append(struct cell **list, char* word);
+void append(struct list_t **list, void* value);
 
 #endif

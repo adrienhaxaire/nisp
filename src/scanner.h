@@ -3,6 +3,6 @@
 
 #include "list.h"
 
-struct cell* scan(char* input);
+struct list_t* scan(char* input);
 
 #endif 

@@ -17,9 +17,9 @@ int main(int argc, char **argv) {
 
       char buffer[] = "(+ 1 ( * 22 333  ))";
 
-      struct cell* sexp = scan(buffer);
+      struct list_t* sexp = scan(buffer);
 
-      struct cell it = *sexp;
+      struct list_t it = *sexp;
       for (;;) {
         printf("value: %s \n", it.value);
         if (it.next == NULL) break;
