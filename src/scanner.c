@@ -6,13 +6,15 @@
 #include "scanner.h"
 #include "list.h"
 
-void scan_sexp(FILE *stream, struct cell** sexp) {
-
+void scan_sexp(char* input, struct cell** sexp) {
+  
   char buffer[2048];
   size_t count = 0;
   char ch;
   
-  while ((ch = fgetc(stream)) != EOF) {
+  for (size_t pos=0; pos < strlen(input); pos++) {
+
+    ch = (char) input[pos];
 
     if (ch == LEFT) {
       char* lexeme = malloc(1);
@@ -43,8 +45,8 @@ void scan_sexp(FILE *stream, struct cell** sexp) {
   }
 }
 
-struct cell* scan(FILE *stream) {
+struct cell* scan(char *input) {
   struct cell* sexp = NULL;
-  scan_sexp(stream, &sexp);
+  scan_sexp(input, &sexp);
   return sexp;
 }

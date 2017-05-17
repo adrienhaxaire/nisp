@@ -1,4 +1,3 @@
 #include "list.h"
 
-struct cell* scan(FILE *stream);
-
+struct cell* scan(char* input);

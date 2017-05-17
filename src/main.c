@@ -16,8 +16,8 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[1], "test") == 0) {
 
       char buffer[] = "(+ 1 ( * 22 333  ))";
-      FILE *stream = fmemopen(buffer, strlen(buffer), "r");
-      struct cell* sexp = scan(stream);
+
+      struct cell* sexp = scan(buffer);
 
       struct cell it = *sexp;
       for (;;) {
